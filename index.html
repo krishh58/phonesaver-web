@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="description" content="PhoneSaver compares 11 carriers to find your cheapest phone plan. Senior, military, and first responder discounts included. Free — no signup required."/>
+<title>PhoneSaver — Stop Overpaying for Your Phone Plan</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #0D1B2A; color: #fff; }
+
+  /* NAV */
+  nav { display: flex; justify-content: space-between; align-items: center; padding: 16px 40px; border-bottom: 1px solid #1e3a50; }
+  .logo { font-size: 1.3rem; font-weight: 900; color: #fff; }
+  .logo span { color: #22c55e; }
+  .nav-links { display: flex; gap: 24px; align-items: center; }
+  .nav-links a { color: #aaa; text-decoration: none; font-size: 0.9rem; }
+  .nav-links a:hover { color: #fff; }
+  .nav-cta { background: #22c55e; color: #000 !important; padding: 8px 18px; border-radius: 20px; font-weight: 700 !important; }
+
+  /* HERO */
+  .hero { text-align: center; padding: 80px 20px 60px; max-width: 800px; margin: 0 auto; }
+  .hero-badge { display: inline-block; background: rgba(34,197,94,0.15); border: 1px solid rgba(34,197,94,0.3); color: #22c55e; font-size: 0.78rem; font-weight: 700; padding: 6px 16px; border-radius: 20px; margin-bottom: 24px; letter-spacing: 0.5px; }
+  .hero h1 { font-size: 3rem; font-weight: 900; line-height: 1.15; margin-bottom: 20px; }
+  .hero h1 span { color: #22c55e; }
+  .hero p { font-size: 1.15rem; color: rgba(255,255,255,0.65); line-height: 1.6; max-width: 560px; margin: 0 auto 36px; }
+  .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .btn-primary { background: linear-gradient(135deg, #22c55e, #16a34a); color: #fff; padding: 16px 32px; border-radius: 12px; font-size: 1rem; font-weight: 800; text-decoration: none; box-shadow: 0 4px 20px rgba(34,197,94,0.35); }
+  .btn-secondary { background: transparent; color: #fff; padding: 16px 32px; border-radius: 12px; font-size: 1rem; font-weight: 700; text-decoration: none; border: 1.5px solid #1e3a50; }
+  .btn-secondary:hover { border-color: #22c55e; color: #22c55e; }
+  .hero-sub { margin-top: 20px; color: #555; font-size: 0.82rem; }
+
+  /* SAVINGS BANNER */
+  .savings-banner { background: linear-gradient(135deg, #0a2010, #0D1B2A); border-top: 1px solid #1e3a50; border-bottom: 1px solid #1e3a50; padding: 32px 20px; }
+  .savings-inner { max-width: 900px; margin: 0 auto; display: flex; justify-content: space-around; flex-wrap: wrap; gap: 24px; text-align: center; }
+  .stat-num { font-size: 2.4rem; font-weight: 900; color: #22c55e; }
+  .stat-label { color: rgba(255,255,255,0.55); font-size: 0.82rem; margin-top: 4px; }
+
+  /* HOW IT WORKS */
+  .section { max-width: 960px; margin: 0 auto; padding: 70px 20px; }
+  .section-label { color: #22c55e; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px; }
+  .section h2 { font-size: 2rem; font-weight: 900; margin-bottom: 48px; }
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
+  .step { background: #132030; border-radius: 16px; padding: 24px; border: 1px solid #1e3a50; }
+  .step-icon { font-size: 2rem; margin-bottom: 12px; }
+  .step h3 { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+  .step p { color: #aaa; font-size: 0.85rem; line-height: 1.5; }
+
+  /* CARRIERS */
+  .carriers-section { background: #091420; border-top: 1px solid #1e3a50; border-bottom: 1px solid #1e3a50; padding: 60px 20px; }
+  .carriers-inner { max-width: 960px; margin: 0 auto; }
+  .carrier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 36px; }
+  .carrier-card { background: #132030; border: 1px solid #1e3a50; border-radius: 12px; padding: 16px; text-align: center; }
+  .carrier-name { font-size: 0.88rem; font-weight: 700; margin-bottom: 4px; }
+  .carrier-price { color: #22c55e; font-size: 0.78rem; }
+  .carrier-network { color: #555; font-size: 0.68rem; margin-top: 2px; }
+
+  /* FEATURES */
+  .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .feature { display: flex; gap: 14px; align-items: flex-start; }
+  .feature-icon { width: 40px; height: 40px; background: rgba(34,197,94,0.12); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+  .feature h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 4px; }
+  .feature p { color: #aaa; font-size: 0.82rem; line-height: 1.5; }
+
+  /* DISCOUNTS */
+  .discounts-section { max-width: 960px; margin: 0 auto; padding: 0 20px 70px; }
+  .discount-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
+  .dtag { padding: 10px 18px; border-radius: 24px; font-size: 0.85rem; font-weight: 600; }
+  .dtag-senior   { background: rgba(168,85,247,0.15); color: #a855f7; border: 1px solid rgba(168,85,247,0.3); }
+  .dtag-military { background: rgba(99,102,241,0.15); color: #818cf8; border: 1px solid rgba(99,102,241,0.3); }
+  .dtag-responder{ background: rgba(59,130,246,0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
+  .dtag-student  { background: rgba(20,184,166,0.15); color: #2dd4bf; border: 1px solid rgba(20,184,166,0.3); }
+  .dtag-aarp     { background: rgba(249,115,22,0.15); color: #fb923c; border: 1px solid rgba(249,115,22,0.3); }
+  .dtag-govt     { background: rgba(234,179,8,0.15);  color: #facc15; border: 1px solid rgba(234,179,8,0.3); }
+
+  /* CTA */
+  .cta-section { background: linear-gradient(135deg, #0a2010, #091420); border-top: 1px solid #1e3a50; text-align: center; padding: 80px 20px; }
+  .cta-section h2 { font-size: 2.2rem; font-weight: 900; margin-bottom: 16px; }
+  .cta-section p { color: rgba(255,255,255,0.6); font-size: 1rem; margin-bottom: 36px; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid #1e3a50; padding: 32px 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .footer-logo { font-size: 1rem; font-weight: 900; }
+  .footer-logo span { color: #22c55e; }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { color: #555; font-size: 0.8rem; text-decoration: none; }
+  .footer-links a:hover { color: #aaa; }
+  .footer-disclosure { width: 100%; color: #444; font-size: 0.72rem; line-height: 1.5; border-top: 1px solid #1e3a50; padding-top: 20px; margin-top: 8px; }
+
+  /* APP BADGES */
+  .app-badges { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 28px; }
+  .badge { background: #132030; border: 1px solid #1e3a50; border-radius: 10px; padding: 10px 20px; display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
+  .badge:hover { border-color: #22c55e; }
+  .badge-icon { font-size: 1.4rem; }
+  .badge-text { font-size: 0.72rem; color: #aaa; }
+  .badge-name { font-size: 0.9rem; font-weight: 700; display: block; }
+
+  @media (max-width: 600px) {
+    nav { padding: 14px 20px; }
+    .nav-links { display: none; }
+    .hero h1 { font-size: 2rem; }
+    .hero { padding: 50px 20px 40px; }
+    footer { flex-direction: column; text-align: center; padding: 24px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Phone<span>Saver</span></div>
+  <div class="nav-links">
+    <a href="#how-it-works">How It Works</a>
+    <a href="#carriers">Carriers</a>
+    <a href="#discounts">Discounts</a>
+    <a href="#compare" class="nav-cta">Compare Plans</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">🇺🇸 Comparing 11 Carriers Across the US</div>
+  <h1>Stop Overpaying<br/>for Your <span>Phone Plan</span></h1>
+  <p>We compare Tello, Mint, Visible, Cricket, T-Mobile, Verizon, AT&T and more — so you can find the cheapest plan for your needs in under 2 minutes.</p>
+  <div class="hero-btns">
+    <a href="#compare" class="btn-primary">Find My Cheapest Plan →</a>
+    <a href="#how-it-works" class="btn-secondary">See How It Works</a>
+  </div>
+  <div class="hero-sub">Free to use · No signup required · We may earn a commission via our links</div>
+</div>
+
+<!-- SAVINGS BANNER -->
+<div class="savings-banner">
+  <div class="savings-inner">
+    <div>
+      <div class="stat-num">$372</div>
+      <div class="stat-label">Average yearly savings vs Verizon</div>
+    </div>
+    <div>
+      <div class="stat-num">11</div>
+      <div class="stat-label">Carriers compared in real time</div>
+    </div>
+    <div>
+      <div class="stat-num">$14</div>
+      <div class="stat-label">Lowest plan we've found this month</div>
+    </div>
+    <div>
+      <div class="stat-num">6</div>
+      <div class="stat-label">Exclusive discount programs matched</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section" id="how-it-works">
+  <div class="section-label">How It Works</div>
+  <h2>Find your plan in 3 steps</h2>
+  <div class="steps">
+    <div class="step">
+      <div class="step-icon">📊</div>
+      <h3>Tell us what you need</h3>
+      <p>Enter how much data you use, how many lines, and what you pay now. Takes 30 seconds.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">🎯</div>
+      <h3>We match your discounts</h3>
+      <p>Senior, military, first responder, student — we surface exclusive pricing most people never find.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">💻</div>
+      <h3>Switch on your computer</h3>
+      <p>Found your plan? Scan the QR code or email the link to yourself — sign up on a real keyboard, not a phone screen.</p>
+    </div>
+    <div class="step">
+      <div class="step-icon">✅</div>
+      <h3>We walk you through it</h3>
+      <p>Step-by-step switching checklist tells you exactly what to do so you keep your number and don't get charged twice.</p>
+    </div>
+  </div>
+</div>
+
+<!-- CARRIERS -->
+<div class="carriers-section" id="carriers">
+  <div class="carriers-inner">
+    <div class="section-label">Carriers We Compare</div>
+    <h2 style="font-size:2rem;font-weight:900;margin-bottom:0">11 carriers. One comparison.</h2>
+    <div class="carrier-grid">
+      <div class="carrier-card"><div class="carrier-name">Tello</div><div class="carrier-price">From $10/mo</div><div class="carrier-network">T-Mobile</div></div>
+      <div class="carrier-card"><div class="carrier-name">Mint Mobile</div><div class="carrier-price">From $15/mo</div><div class="carrier-network">T-Mobile</div></div>
+      <div class="carrier-card"><div class="carrier-name">US Mobile</div><div class="carrier-price">From $17/mo</div><div class="carrier-network">T-Mobile or Verizon</div></div>
+      <div class="carrier-card"><div class="carrier-name">Visible</div><div class="carrier-price">From $25/mo</div><div class="carrier-network">Verizon</div></div>
+      <div class="carrier-card"><div class="carrier-name">Boost Mobile</div><div class="carrier-price">From $25/mo</div><div class="carrier-network">AT&T</div></div>
+      <div class="carrier-card"><div class="carrier-name">Cricket</div><div class="carrier-price">From $25/mo</div><div class="carrier-network">AT&T</div></div>
+      <div class="carrier-card"><div class="carrier-name">Metro</div><div class="carrier-price">From $25/mo</div><div class="carrier-network">T-Mobile</div></div>
+      <div class="carrier-card"><div class="carrier-name">Google Fi</div><div class="carrier-price">From $35/mo</div><div class="carrier-network">T-Mobile</div></div>
+      <div class="carrier-card"><div class="carrier-name">T-Mobile</div><div class="carrier-price">From $60/mo</div><div class="carrier-network">T-Mobile</div></div>
+      <div class="carrier-card"><div class="carrier-name">AT&T</div><div class="carrier-price">From $50/mo</div><div class="carrier-network">AT&T</div></div>
+      <div class="carrier-card"><div class="carrier-name">Verizon</div><div class="carrier-price">From $65/mo</div><div class="carrier-network">Verizon</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="section">
+  <div class="section-label">What Makes Us Different</div>
+  <h2>Not just a price table</h2>
+  <div class="features">
+    <div class="feature">
+      <div class="feature-icon">🎯</div>
+      <div><h3>Personalized discount matching</h3><p>Senior, military, first responder, student — we show you plans others don't advertise.</p></div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">💰</div>
+      <div><h3>Savings vs YOUR bill</h3><p>Enter what you pay now and we calculate your exact monthly and yearly savings.</p></div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📱</div>
+      <div><h3>Phone compatibility check</h3><p>Enter your phone model and we confirm it works on the new carrier before you switch.</p></div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">💻</div>
+      <div><h3>Sign up on your computer</h3><p>QR code + email link so you don't have to fill out forms on a phone screen.</p></div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">✅</div>
+      <div><h3>Switching checklist</h3><p>Step-by-step guide so you keep your number, avoid fees, and don't get double-charged.</p></div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📶</div>
+      <div><h3>Coverage maps built in</h3><p>Check real coverage in your area before committing to a new carrier.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- DISCOUNTS -->
+<div class="discounts-section" id="discounts">
+  <div class="section-label">Exclusive Discounts</div>
+  <h2 style="font-size:2rem;font-weight:900;margin-bottom:8px">Are you leaving money on the table?</h2>
+  <p style="color:#aaa;font-size:0.95rem;max-width:560px">Most people don't know their carrier offers exclusive pricing for their situation. We surface all of them.</p>
+  <div class="discount-tags">
+    <span class="dtag dtag-senior">👴 Age 55+ Plans — as low as $25/line</span>
+    <span class="dtag dtag-military">🎖️ Military & Veterans — exclusive pricing at T-Mobile, Verizon & AT&T</span>
+    <span class="dtag dtag-responder">🚒 First Responders — AT&T FirstNet from $35/mo</span>
+    <span class="dtag dtag-student">🎓 Students — discounts via UNiDAYS & AT&T education</span>
+    <span class="dtag dtag-aarp">🏛️ AARP Members — 5% off AT&T + 30% off accessories</span>
+    <span class="dtag dtag-govt">🏢 Government Employees — corporate rate programs</span>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section" id="compare">
+  <h2>Ready to stop overpaying?</h2>
+  <p>It takes under 2 minutes. No signup. No spam. Just your cheapest plan.</p>
+  <a href="#" class="btn-primary" style="display:inline-block;font-size:1.1rem;padding:18px 40px">Find My Plan Now →</a>
+  <div class="app-badges">
+    <a href="#" class="badge">
+      <div class="badge-icon">▶</div>
+      <div><div class="badge-text">Coming soon on</div><div class="badge-name">Google Play</div></div>
+    </a>
+    <a href="#" class="badge">
+      <div class="badge-icon">🍎</div>
+      <div><div class="badge-text">Coming soon on</div><div class="badge-name">App Store</div></div>
+    </a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Phone<span>Saver</span></div>
+  <div class="footer-links">
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Use</a>
+    <a href="#">Contact</a>
+    <a href="#">About</a>
+  </div>
+  <div class="footer-disclosure">
+    <strong style="color:#555">Affiliate Disclosure:</strong> PhoneSaver may earn a commission when you sign up for a plan through our links — at no extra cost to you. Our rankings are never influenced by commercial relationships. We compare all major carriers regardless of whether we have an affiliate arrangement with them.
+  </div>
+</footer>
+
+</body>
+</html>
