@@ -447,7 +447,7 @@
       list.innerHTML = '<div class="results-loading">No plans found. Try selecting fewer filters.</div>';
       return;
     }
-    list.innerHTML = plans.slice(0, 10).map((p, i) => {
+    list.innerHTML = plans.slice(0, 25).map((p, i) => {
       const matchedDiscounts = (p.qualifies_for || []).filter(d => discounts.includes(d));
       const discountTags = matchedDiscounts.map(d => `<span class="plan-tag discount">✓ ${d.replace('_',' ')}</span>`).join('');
       const featureTags = (p.features || []).slice(0,2).map(f => `<span class="plan-tag">${f}</span>`).join('');
