@@ -219,10 +219,31 @@
         <div class="quiz-label">💳 Pay by AutoPay<small>Save $5–10/mo automatically</small></div>
       </label>
     </div>
-    <label class="quiz-option none-option" onclick="toggleNone(this)" style="margin-bottom:16px;border-style:dashed;">
+    <label class="quiz-option none-option" onclick="toggleNone(this)" style="margin-bottom:20px;border-style:dashed;">
       <div class="quiz-check">✓</div>
       <div class="quiz-label">🙅 None of these apply to me<small>Just show me the best available plans</small></div>
     </label>
+    <div style="margin-bottom:20px;">
+      <div style="font-size:0.88rem;font-weight:700;color:#333;margin-bottom:10px;">📶 How much data do you use per month?</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <label class="quiz-option data-option" onclick="selectData(this,'3')" data-gb="3">
+          <div class="quiz-check">✓</div>
+          <div class="quiz-label">Under 5GB<small>Light use, mostly WiFi</small></div>
+        </label>
+        <label class="quiz-option data-option" onclick="selectData(this,'10')" data-gb="10">
+          <div class="quiz-check">✓</div>
+          <div class="quiz-label">5–15GB<small>Moderate — streaming sometimes</small></div>
+        </label>
+        <label class="quiz-option data-option" onclick="selectData(this,'20')" data-gb="20">
+          <div class="quiz-check">✓</div>
+          <div class="quiz-label">15–30GB<small>Heavy — video, navigation</small></div>
+        </label>
+        <label class="quiz-option data-option selected" onclick="selectData(this,'-1')" data-gb="-1">
+          <div class="quiz-check">✓</div>
+          <div class="quiz-label">Unlimited<small>Don't want to think about it</small></div>
+        </label>
+      </div>
+    </div>
     <button class="quiz-btn" id="quizBtn" onclick="goToApp()">Find My Savings →</button>
   </div>
   <div class="hero-sub">Free to use · No signup required · We may earn a commission via our links</div>
@@ -361,6 +382,14 @@
   const API = 'https://web-production-a9fa3.up.railway.app';
 
   // Quiz logic
+  function selectData(el, gb) {
+    document.querySelectorAll('.data-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+  }
+  function getSelectedDataGb() {
+    const sel = document.querySelector('.data-option.selected');
+    return sel ? parseInt(sel.dataset.gb) : -1;
+  }
   function toggleOption(el) {
     document.querySelector('.none-option').classList.remove('selected');
     el.classList.toggle('selected');
@@ -467,6 +496,12 @@
       } else {
         title.textContent = 'Best Plans Right Now';
         subtitle.textContent = 'All carriers · Ranked by price';
+      }
+
+      // Filter by data requirement
+      const dataGb = getSelectedDataGb();
+      if (dataGb !== -1) {
+        plans = plans.filter(p => p.data_gb === -1 || p.data_gb >= dataGb);
       }
 
       plans.sort((a, b) => a.monthly_cost - b.monthly_cost);
