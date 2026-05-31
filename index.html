@@ -491,13 +491,15 @@
       subtitle.textContent = 'All carriers · Ranked by price';
     }
 
-    const dataGb = getSelectedDataGb();
-    if (dataGb === -1) {
-      const unlimited = plans.filter(p => p.data_gb === -1);
-      if (unlimited.length) plans = unlimited;
-    } else {
-      const filtered = plans.filter(p => p.data_gb === -1 || p.data_gb >= dataGb);
-      if (filtered.length) plans = filtered;
+    if (!noneSelected) {
+      const dataGb = getSelectedDataGb();
+      if (dataGb === -1) {
+        const unlimited = plans.filter(p => p.data_gb === -1);
+        if (unlimited.length) plans = unlimited;
+      } else {
+        const filtered = plans.filter(p => p.data_gb === -1 || p.data_gb >= dataGb);
+        if (filtered.length) plans = filtered;
+      }
     }
 
     plans.sort((a, b) => a.monthly_cost - b.monthly_cost);
