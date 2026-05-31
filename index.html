@@ -382,11 +382,13 @@
   const API = 'https://web-production-a9fa3.up.railway.app';
   let _cachedPlans = null;
   let _cachedHealth = null;
+  let _dataExplicitlySelected = false;
 
   // Quiz logic
   function selectData(el, gb) {
     document.querySelectorAll('.data-option').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
+    _dataExplicitlySelected = true;
     if (document.getElementById('resultsSection').classList.contains('show')) applyFilters();
   }
   function getSelectedDataGb() {
@@ -497,7 +499,7 @@
       subtitle.textContent = 'All carriers · Ranked by price';
     }
 
-    if (!noneSelected) {
+    if (!noneSelected && _dataExplicitlySelected) {
       const dataGb = getSelectedDataGb();
       if (dataGb === -1) {
         const unlimited = plans.filter(p => p.data_gb === -1);
