@@ -123,6 +123,27 @@
   .results-freshness { text-align: center; font-size: 0.75rem; color: #aaa; margin-top: 16px; }
   .top-badge { display: inline-block; background: #2563eb; color: #fff; font-size: 0.65rem; font-weight: 800; padding: 2px 8px; border-radius: 10px; margin-left: 8px; vertical-align: middle; }
 
+  /* INTERNET SECTION */
+  .internet-hero { text-align: center; padding: 48px 20px 32px; max-width: 860px; margin: 0 auto; }
+  .internet-hero .hero-badge { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.3); color: #059669; }
+  .internet-hero h2 { font-size: 2.2rem; font-weight: 900; line-height: 1.15; margin-bottom: 14px; color: #111; }
+  .internet-hero h2 span { color: #059669; }
+  .internet-hero p { font-size: 1.05rem; color: #555; line-height: 1.6; max-width: 540px; margin: 0 auto 28px; }
+  .quiz-card.internet { border-color: rgba(16,185,129,0.3); }
+  .quiz-btn.internet { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 4px 16px rgba(16,185,129,0.3); }
+  .quiz-option.speed-option.selected { border-color: #059669; background: rgba(16,185,129,0.08); }
+  .quiz-option.speed-option.selected .quiz-check { background: #059669; border-color: #059669; color: #fff; }
+  .internet-results { max-width: 760px; margin: 0 auto 48px; padding: 0 20px; display: none; }
+  .internet-results.show { display: block; }
+  .internet-results .results-header h2 { color: #059669; }
+  .plan-card.internet-card:hover { border-color: #059669; }
+  .plan-card.internet-card.top-pick { border-color: #059669; box-shadow: 0 4px 20px rgba(16,185,129,0.12); }
+  .plan-rank.green { color: #059669; }
+  .plan-link.green { background: #059669; }
+  .plan-link.green:hover { background: #047857; }
+  .internet-divider { border: none; border-top: 2px dashed #e0d8cf; margin: 40px auto; max-width: 760px; }
+  .speed-tag { font-size: 0.72rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; background: rgba(16,185,129,0.08); color: #059669; }
+
   /* EMAIL MODAL */
   .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 999; align-items: center; justify-content: center; padding: 20px; }
   .modal-overlay.open { display: flex; }
@@ -267,6 +288,77 @@
     <div><div class="stat-num">$14</div><div class="stat-label">Lowest plan found this month</div></div>
     <div><div class="stat-num">6</div><div class="stat-label">Exclusive discount programs matched</div></div>
   </div>
+</div>
+
+<!-- INTERNET SECTION -->
+<hr class="internet-divider" id="internet">
+<div class="internet-hero">
+  <div class="hero-badge">🌐 Home Internet Comparison</div>
+  <h2>Are You Overpaying for<br/><span>Home Internet?</span></h2>
+  <p>Compare AT&T Fiber, T-Mobile Home Internet, Verizon, Xfinity, Spectrum and more — ranked by price with your discounts applied.</p>
+</div>
+
+<div style="max-width:680px;margin:0 auto 16px;padding:0 20px;">
+  <div class="quiz-card internet">
+    <div class="quiz-title">Find your best internet plan</div>
+    <div class="quiz-subtitle">Tell us what you need and we'll rank every option for you.</div>
+
+    <div style="margin-bottom:20px;">
+      <div style="font-size:0.88rem;font-weight:700;color:#333;margin-bottom:10px;">⚡ What do you mainly use internet for?</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <label class="quiz-option speed-option" onclick="selectSpeed(this,'25')" data-mbps="25">
+          <div class="quiz-check">✓</div>
+          <div class="quiz-label">Basic Browsing<small>Email, social, news</small></div>
+        </label>
+        <label class="quiz-option speed-option" onclick="selectSpeed(this,'100')" data-mbps="100">
+          <div class="quiz-check">✓</div>
+          <div class="quiz-label">Streaming<small>Netflix, YouTube, video calls</small></div>
+        </label>
+        <label class="quiz-option speed-option" onclick="selectSpeed(this,'300')" data-mbps="300">
+          <div class="quiz-check">✓</div>
+          <div class="quiz-label">Work From Home<small>Multiple devices, video conferencing</small></div>
+        </label>
+        <label class="quiz-option speed-option" onclick="selectSpeed(this,'500')" data-mbps="500">
+          <div class="quiz-check">✓</div>
+          <div class="quiz-label">Gaming / Power User<small>Fast speeds, low latency needed</small></div>
+        </label>
+      </div>
+    </div>
+
+    <div style="margin-bottom:20px;">
+      <div style="font-size:0.88rem;font-weight:700;color:#333;margin-bottom:10px;">🏷️ Do any of these apply to you?</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <label class="quiz-option" onclick="toggleInetOption(this)">
+          <div class="quiz-check">✓</div>
+          <div class="quiz-label">👴 Age 55 or older<small>Senior discounts available</small></div>
+        </label>
+        <label class="quiz-option" onclick="toggleInetOption(this)">
+          <div class="quiz-check">✓</div>
+          <div class="quiz-label">🎖️ Military / Veteran<small>Exclusive rates at major providers</small></div>
+        </label>
+        <label class="quiz-option" onclick="toggleInetOption(this)">
+          <div class="quiz-check">✓</div>
+          <div class="quiz-label">💰 Low Income / ACP<small>Affordable Connectivity Program</small></div>
+        </label>
+        <label class="quiz-option" onclick="toggleInetOption(this)">
+          <div class="quiz-check">✓</div>
+          <div class="quiz-label">📋 No Contract Preferred<small>Month-to-month only</small></div>
+        </label>
+      </div>
+    </div>
+
+    <button class="quiz-btn internet" onclick="findInternet()">Find My Internet Plan →</button>
+  </div>
+</div>
+
+<!-- INTERNET RESULTS -->
+<div class="internet-results" id="internetResults">
+  <div class="results-header">
+    <h2 id="inetTitle">Best Internet Plans</h2>
+    <p id="inetSubtitle">Ranked by price · Filtered for your needs</p>
+  </div>
+  <div id="inetPlansList"></div>
+  <div class="results-freshness" id="inetFreshness"></div>
 </div>
 
 <!-- HOW IT WORKS -->
@@ -537,6 +629,143 @@
     }
 
     applyFilters();
+  }
+
+  // Internet section
+  let _cachedInet = null;
+  let _inetHealthCache = null;
+  let _speedExplicitlySelected = false;
+
+  function selectSpeed(el, mbps) {
+    document.querySelectorAll('.speed-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    _speedExplicitlySelected = true;
+    if (document.getElementById('internetResults').classList.contains('show')) applyInetFilters();
+  }
+
+  function toggleInetOption(el) {
+    el.classList.toggle('selected');
+    if (document.getElementById('internetResults').classList.contains('show')) applyInetFilters();
+  }
+
+  function getSelectedSpeed() {
+    const sel = document.querySelector('.speed-option.selected');
+    return sel ? parseInt(sel.dataset.mbps) : 0;
+  }
+
+  function getInetDiscounts() {
+    const discounts = [];
+    const noContract = [];
+    document.querySelectorAll('.quiz-card.internet .quiz-option.selected:not(.speed-option)').forEach(el => {
+      const label = el.querySelector('.quiz-label').textContent;
+      if (label.includes('55')) discounts.push('senior');
+      if (label.includes('Military')) discounts.push('military');
+      if (label.includes('Low Income') || label.includes('ACP')) discounts.push('low_income');
+    });
+    return discounts;
+  }
+
+  function isNoContractPreferred() {
+    let found = false;
+    document.querySelectorAll('.quiz-card.internet .quiz-option.selected:not(.speed-option)').forEach(el => {
+      if (el.querySelector('.quiz-label').textContent.includes('No Contract')) found = true;
+    });
+    return found;
+  }
+
+  function formatSpeed(mbps) {
+    if (!mbps || mbps <= 0) return 'Speed varies';
+    if (mbps >= 1000) return (mbps/1000) + ' Gbps';
+    return mbps + ' Mbps';
+  }
+
+  function renderInetPlans(plans, discounts, lastScraped) {
+    const list = document.getElementById('inetPlansList');
+    if (!plans.length) {
+      list.innerHTML = '<div class="results-loading">No internet plans found for your area. Try adjusting your filters.</div>';
+      return;
+    }
+    list.innerHTML = plans.slice(0, 15).map((p, i) => {
+      const matchedDiscounts = (p.qualifies_for || []).filter(d => discounts.includes(d));
+      const discountTags = matchedDiscounts.map(d => `<span class="plan-tag discount">✓ ${d.replace('_',' ')}</span>`).join('');
+      const speedTag = p.speed_mbps > 0 ? `<span class="speed-tag">⚡ ${formatSpeed(p.speed_mbps)}</span>` : '';
+      const contractTag = p.contract_months > 0 ? `<span class="plan-tag" style="background:rgba(239,68,68,0.08);color:#dc2626;">${p.contract_months}mo contract</span>` : `<span class="plan-tag" style="background:rgba(16,185,129,0.08);color:#059669;">No contract</span>`;
+      const topBadge = i === 0 ? '<span class="top-badge" style="background:#059669;">BEST MATCH</span>' : '';
+      const url = p.affiliate_url || p.carrier_url || '#';
+      const dataLabel = p.data_cap_gb === -1 ? 'Unlimited data' : `${p.data_cap_gb}GB cap`;
+      return `
+        <div class="plan-card internet-card ${i === 0 ? 'top-pick' : ''}">
+          <div class="plan-rank green">#${i+1}</div>
+          <div class="plan-info">
+            <div class="plan-carrier">${p.carrier} · ${p.network || ''}</div>
+            <div class="plan-name">${p.plan_name}${topBadge}</div>
+            <div class="plan-tags">${speedTag}${contractTag}${discountTags}</div>
+          </div>
+          <div class="plan-price">
+            <div class="plan-amount">$${p.monthly_cost}<span>/mo</span></div>
+            <div class="plan-data">${dataLabel}</div>
+            <a class="plan-link green" href="${url}" target="_blank" rel="noopener">View Plan →</a>
+          </div>
+        </div>`;
+    }).join('');
+
+    if (lastScraped) {
+      const hours = Math.round((Date.now() - new Date(lastScraped)) / 36e5);
+      document.getElementById('inetFreshness').textContent = `Prices updated ${hours < 2 ? 'recently' : hours + ' hours ago'} · Always verify on provider site`;
+    }
+  }
+
+  function applyInetFilters() {
+    if (!_cachedInet) return;
+    const discounts = getInetDiscounts();
+    const noContract = isNoContractPreferred();
+    const speedMbps = _speedExplicitlySelected ? getSelectedSpeed() : 0;
+    let plans = [..._cachedInet];
+
+    // Filter by speed
+    if (speedMbps > 0) {
+      const fast = plans.filter(p => p.speed_mbps <= 0 || p.speed_mbps >= speedMbps);
+      if (fast.length) plans = fast;
+    }
+
+    // Filter by no contract preference
+    if (noContract) {
+      const nc = plans.filter(p => !p.contract_months || p.contract_months === 0);
+      if (nc.length) plans = nc;
+    }
+
+    // Filter by discount
+    if (discounts.length) {
+      const filtered = plans.filter(p => (p.qualifies_for || []).some(d => discounts.includes(d)));
+      if (filtered.length) plans = filtered;
+    }
+
+    plans.sort((a, b) => a.monthly_cost - b.monthly_cost);
+    const lastScraped = _inetHealthCache ? _inetHealthCache.last_scraped : null;
+    renderInetPlans(plans, discounts, lastScraped);
+  }
+
+  async function findInternet() {
+    const section = document.getElementById('internetResults');
+    const list = document.getElementById('inetPlansList');
+    section.classList.add('show');
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    if (!_cachedInet) {
+      list.innerHTML = '<div class="results-loading">🔍 Finding internet plans...</div>';
+      try {
+        const [inetRes, healthRes] = await Promise.all([
+          fetch(API + '/internet'),
+          fetch(API + '/health')
+        ]);
+        _cachedInet = await inetRes.json();
+        _inetHealthCache = await healthRes.json();
+      } catch(e) {
+        list.innerHTML = '<div class="results-loading">⚠️ Could not load plans. Please try again.</div>';
+        return;
+      }
+    }
+    applyInetFilters();
   }
 
   // Modal (for app store badges)
