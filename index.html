@@ -96,6 +96,24 @@
   .badge { background: #2a2a2a; border: 1px solid #333; border-radius: 10px; padding: 10px 20px; display: flex; align-items: center; gap: 10px; text-decoration: none; color: #fff; }
   .badge:hover { border-color: #3b82f6; }
   .badge-icon { font-size: 1.8rem; }
+
+  /* EMAIL MODAL */
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.55); z-index: 999; align-items: center; justify-content: center; padding: 20px; }
+  .modal-overlay.open { display: flex; }
+  .modal { background: #fff; border-radius: 20px; padding: 40px 36px; max-width: 460px; width: 100%; text-align: center; position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.2); }
+  .modal-close { position: absolute; top: 16px; right: 20px; font-size: 1.4rem; color: #aaa; cursor: pointer; background: none; border: none; line-height: 1; }
+  .modal-close:hover { color: #333; }
+  .modal-icon { font-size: 3rem; margin-bottom: 12px; }
+  .modal h2 { font-size: 1.4rem; font-weight: 900; color: #111; margin-bottom: 8px; }
+  .modal p { font-size: 0.9rem; color: #666; line-height: 1.6; margin-bottom: 24px; }
+  .modal-form { display: flex; flex-direction: column; gap: 12px; }
+  .modal-input { padding: 14px 18px; border: 1.5px solid #e0d8cf; border-radius: 12px; font-size: 0.95rem; outline: none; transition: border-color 0.15s; }
+  .modal-input:focus { border-color: #2563eb; }
+  .modal-btn { background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: #fff; border: none; padding: 15px; border-radius: 12px; font-size: 1rem; font-weight: 800; cursor: pointer; box-shadow: 0 4px 16px rgba(37,99,235,0.3); transition: opacity 0.15s; }
+  .modal-btn:hover { opacity: 0.92; }
+  .modal-success { display: none; }
+  .modal-success.show { display: block; }
+  .modal-fields.hide { display: none; }
   .badge-text { font-size: 0.72rem; color: #aaa; }
   .badge-name { font-size: 0.9rem; font-weight: 700; display: block; }
 
@@ -262,8 +280,30 @@
   <p>It takes under 2 minutes. No signup. No spam. Just your best plan.</p>
   <a href="#quiz" class="btn-primary" style="display:inline-block;font-size:1.1rem;padding:18px 40px">Find My Savings →</a>
   <div class="app-badges">
-    <a href="#" class="badge"><div class="badge-icon">▶</div><div><div class="badge-text">Coming soon on</div><div class="badge-name">Google Play</div></div></a>
-    <a href="#" class="badge"><div class="badge-icon">🍎</div><div><div class="badge-text">Coming soon on</div><div class="badge-name">App Store</div></div></a>
+    <a href="#" onclick="openModal();return false;" class="badge"><div class="badge-icon">▶</div><div><div class="badge-text">Coming soon on</div><div class="badge-name">Google Play</div></div></a>
+    <a href="#" onclick="openModal();return false;" class="badge"><div class="badge-icon">🍎</div><div><div class="badge-text">Coming soon on</div><div class="badge-name">App Store</div></div></a>
+  </div>
+</div>
+
+<!-- EMAIL MODAL -->
+<div class="modal-overlay" id="notifyModal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-icon">📱</div>
+    <h2>PhoneSaver is Launching Soon</h2>
+    <p>Drop your email and we'll notify you the day the app goes live — plus send you the best plan deals matched to your situation.</p>
+    <div class="modal-fields" id="modalFields">
+      <div class="modal-form">
+        <input class="modal-input" type="email" id="notifyEmail" placeholder="your@email.com" />
+        <button class="modal-btn" onclick="submitNotify()">Notify Me When It Launches →</button>
+      </div>
+      <div style="font-size:0.75rem;color:#aaa;margin-top:10px;">No spam. One email when we launch. Unsubscribe anytime.</div>
+    </div>
+    <div class="modal-success" id="modalSuccess">
+      <div style="font-size:2.5rem;margin-bottom:12px;">🎉</div>
+      <div style="font-weight:800;font-size:1.1rem;color:#111;margin-bottom:8px;">You're on the list!</div>
+      <div style="color:#666;font-size:0.9rem;">We'll email you the moment PhoneSaver goes live.</div>
+    </div>
   </div>
 </div>
 
@@ -308,7 +348,33 @@
     }
   }
   function goToApp() {
-    window.location.href = '#compare';
+    openModal();
+  }
+  function openModal() {
+    document.getElementById('notifyModal').classList.add('open');
+    document.getElementById('notifyEmail').focus();
+  }
+  function closeModal() {
+    document.getElementById('notifyModal').classList.remove('open');
+  }
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('notifyModal')) closeModal();
+  }
+  async function submitNotify() {
+    const email = document.getElementById('notifyEmail').value.trim();
+    if (!email || !email.includes('@')) {
+      document.getElementById('notifyEmail').focus();
+      return;
+    }
+    try {
+      await fetch('https://web-production-a9fa3.up.railway.app/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+    } catch(e) {}
+    document.getElementById('modalFields').classList.add('hide');
+    document.getElementById('modalSuccess').classList.add('show');
   }
 </script>
 
