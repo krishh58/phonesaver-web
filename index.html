@@ -380,14 +380,14 @@
 
 <script>
   const API = 'https://web-production-a9fa3.up.railway.app';
+  let _cachedPlans = null;
+  let _cachedHealth = null;
 
   // Quiz logic
   function selectData(el, gb) {
     document.querySelectorAll('.data-option').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
-    if (document.getElementById('resultsSection').classList.contains('show')) {
-      goToApp();
-    }
+    if (document.getElementById('resultsSection').classList.contains('show')) applyFilters();
   }
   function getSelectedDataGb() {
     const sel = document.querySelector('.data-option.selected');
@@ -397,13 +397,13 @@
     document.querySelector('.none-option').classList.remove('selected');
     el.classList.toggle('selected');
     updateBtn();
-    if (document.getElementById('resultsSection').classList.contains('show')) goToApp();
+    if (document.getElementById('resultsSection').classList.contains('show')) applyFilters();
   }
   function toggleNone(el) {
     document.querySelectorAll('.quiz-option:not(.none-option)').forEach(o => o.classList.remove('selected'));
     el.classList.toggle('selected');
     updateBtn();
-    if (document.getElementById('resultsSection').classList.contains('show')) goToApp();
+    if (document.getElementById('resultsSection').classList.contains('show')) applyFilters();
   }
   function updateBtn() {
     const noneSelected = document.querySelector('.none-option.selected');
@@ -473,53 +473,60 @@
     }
   }
 
-  async function goToApp() {
+  function applyFilters() {
+    if (!_cachedPlans) return;
     const discounts = getSelectedDiscounts();
     const noneSelected = document.querySelector('.none-option.selected');
-    const section = document.getElementById('resultsSection');
-    const list = document.getElementById('plansList');
     const title = document.getElementById('resultsTitle');
     const subtitle = document.getElementById('resultsSubtitle');
+    let plans = [..._cachedPlans];
+
+    if (!noneSelected && discounts.length) {
+      const filtered = plans.filter(p => (p.qualifies_for || []).some(d => discounts.includes(d)));
+      plans = filtered.length ? filtered : plans;
+      title.textContent = `Your Savings — ${discounts.map(d => d.replace('_',' ')).join(', ')}`;
+      subtitle.textContent = `Showing plans with your discount qualifications · Ranked by price`;
+    } else {
+      title.textContent = 'Best Plans Right Now';
+      subtitle.textContent = 'All carriers · Ranked by price';
+    }
+
+    const dataGb = getSelectedDataGb();
+    if (dataGb === -1) {
+      const unlimited = plans.filter(p => p.data_gb === -1);
+      if (unlimited.length) plans = unlimited;
+    } else {
+      const filtered = plans.filter(p => p.data_gb === -1 || p.data_gb >= dataGb);
+      if (filtered.length) plans = filtered;
+    }
+
+    plans.sort((a, b) => a.monthly_cost - b.monthly_cost);
+    renderPlans(plans, discounts, _cachedHealth ? _cachedHealth.last_scraped : null);
+  }
+
+  async function goToApp() {
+    const section = document.getElementById('resultsSection');
+    const list = document.getElementById('plansList');
 
     section.classList.add('show');
-    list.innerHTML = '<div class="results-loading">🔍 Finding your best plans...</div>';
     section.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    try {
-      const [plansRes, healthRes] = await Promise.all([
-        fetch(API + '/plans'),
-        fetch(API + '/health')
-      ]);
-      let plans = await plansRes.json();
-      const health = await healthRes.json();
-
-      if (!noneSelected && discounts.length) {
-        const filtered = plans.filter(p => (p.qualifies_for || []).some(d => discounts.includes(d)));
-        plans = filtered.length ? filtered : plans;
-        title.textContent = `Your Savings — ${discounts.map(d => d.replace('_',' ')).join(', ')}`;
-        subtitle.textContent = `Showing plans with your discount qualifications · Ranked by price`;
-      } else {
-        title.textContent = 'Best Plans Right Now';
-        subtitle.textContent = 'All carriers · Ranked by price';
+    if (!_cachedPlans) {
+      list.innerHTML = '<div class="results-loading">🔍 Finding your best plans...</div>';
+      try {
+        const [plansRes, healthRes] = await Promise.all([
+          fetch(API + '/plans'),
+          fetch(API + '/health')
+        ]);
+        _cachedPlans = await plansRes.json();
+        _cachedHealth = await healthRes.json();
+      } catch(e) {
+        list.innerHTML = '<div class="results-loading">⚠️ Could not load plans. Please try again.</div>';
+        return;
       }
-
-      // Filter by data requirement
-      const dataGb = getSelectedDataGb();
-      if (dataGb === -1) {
-        // Unlimited selected — only show truly unlimited plans
-        const unlimited = plans.filter(p => p.data_gb === -1);
-        if (unlimited.length) plans = unlimited;
-      } else {
-        // Specific GB tier — show plans that meet or exceed it
-        const filtered = plans.filter(p => p.data_gb === -1 || p.data_gb >= dataGb);
-        if (filtered.length) plans = filtered;
-      }
-
-      plans.sort((a, b) => a.monthly_cost - b.monthly_cost);
-      renderPlans(plans, discounts, health.last_scraped);
-    } catch(e) {
-      list.innerHTML = '<div class="results-loading">⚠️ Could not load plans. Please try again.</div>';
     }
+
+    applyFilters();
   }
 
   // Modal (for app store badges)
