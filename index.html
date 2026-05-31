@@ -481,12 +481,18 @@
     const subtitle = document.getElementById('resultsSubtitle');
     let plans = [..._cachedPlans];
 
+    const SPECIAL = ['senior', 'military', 'first_responder', 'student'];
     if (!noneSelected && discounts.length) {
       const filtered = plans.filter(p => (p.qualifies_for || []).some(d => discounts.includes(d)));
       plans = filtered.length ? filtered : plans;
       title.textContent = `Your Savings — ${discounts.map(d => d.replace('_',' ')).join(', ')}`;
       subtitle.textContent = `Showing plans with your discount qualifications · Ranked by price`;
     } else {
+      // Hide plans that require special eligibility nobody selected
+      plans = plans.filter(p => {
+        const q = p.qualifies_for || [];
+        return !q.some(d => SPECIAL.includes(d)) || q.some(d => discounts.includes(d));
+      });
       title.textContent = 'Best Plans Right Now';
       subtitle.textContent = 'All carriers · Ranked by price';
     }
