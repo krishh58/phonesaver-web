@@ -385,6 +385,9 @@
   function selectData(el, gb) {
     document.querySelectorAll('.data-option').forEach(o => o.classList.remove('selected'));
     el.classList.add('selected');
+    if (document.getElementById('resultsSection').classList.contains('show')) {
+      goToApp();
+    }
   }
   function getSelectedDataGb() {
     const sel = document.querySelector('.data-option.selected');
@@ -394,11 +397,13 @@
     document.querySelector('.none-option').classList.remove('selected');
     el.classList.toggle('selected');
     updateBtn();
+    if (document.getElementById('resultsSection').classList.contains('show')) goToApp();
   }
   function toggleNone(el) {
     document.querySelectorAll('.quiz-option:not(.none-option)').forEach(o => o.classList.remove('selected'));
     el.classList.toggle('selected');
     updateBtn();
+    if (document.getElementById('resultsSection').classList.contains('show')) goToApp();
   }
   function updateBtn() {
     const noneSelected = document.querySelector('.none-option.selected');
@@ -500,8 +505,14 @@
 
       // Filter by data requirement
       const dataGb = getSelectedDataGb();
-      if (dataGb !== -1) {
-        plans = plans.filter(p => p.data_gb === -1 || p.data_gb >= dataGb);
+      if (dataGb === -1) {
+        // Unlimited selected — only show truly unlimited plans
+        const unlimited = plans.filter(p => p.data_gb === -1);
+        if (unlimited.length) plans = unlimited;
+      } else {
+        // Specific GB tier — show plans that meet or exceed it
+        const filtered = plans.filter(p => p.data_gb === -1 || p.data_gb >= dataGb);
+        if (filtered.length) plans = filtered;
       }
 
       plans.sort((a, b) => a.monthly_cost - b.monthly_cost);
